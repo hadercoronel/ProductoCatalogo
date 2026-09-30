@@ -7,8 +7,13 @@ namespace ProductoCatalogo.Meddlewares
     public class ExceptionHandlingMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly ILogger<ExceptionHandlingMiddleware> _logger;
 
-        public ExceptionHandlingMiddleware(RequestDelegate next) => _next = next;
+        public ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger)
+        {
+            _next = next;
+            _logger = logger;
+        }
 
         public async Task InvokeAsync(HttpContext context)
         {
@@ -22,7 +27,7 @@ namespace ProductoCatalogo.Meddlewares
             }
         }
 
-        private static Task HandleExceptionAsync(HttpContext context, Exception exception)
+        private Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             var code = HttpStatusCode.InternalServerError;
             var message = "Ocurrió un error interno en el servidor.";
@@ -30,12 +35,16 @@ namespace ProductoCatalogo.Meddlewares
             switch (exception)
             {
                 case DomainExcepciones:
+                case ArgumentException:
                     code = HttpStatusCode.BadRequest;
                     message = exception.Message;
                     break;
                 case KeyNotFoundException:
                     code = HttpStatusCode.NotFound;
                     message = exception.Message;
+                    break;
+                default:
+                    _logger.LogError(exception, "Error no controlado en {Path}", context.Request.Path);
                     break;
             }
 

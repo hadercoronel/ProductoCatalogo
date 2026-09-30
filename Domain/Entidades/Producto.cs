@@ -13,6 +13,13 @@
 
         public Producto(string nombre, string descripcion, decimal precio, int inicialStock)
         {
+            if (string.IsNullOrWhiteSpace(nombre))
+                throw new ArgumentException("El nombre del producto es obligatorio.", nameof(nombre));
+            if (precio < 0)
+                throw new ArgumentException("El precio no puede ser negativo.", nameof(precio));
+            if (inicialStock < 0)
+                throw new ArgumentException("El stock inicial no puede ser negativo.", nameof(inicialStock));
+
             Nombre = nombre;
             Descripcion = descripcion;
             Precio = precio;

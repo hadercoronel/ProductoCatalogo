@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Aplicacion.Descuentos;
 using Domain.Entidades;
+using Infraestructura.Excepciones;
 using Infraestructura.Persistencia.Repositorios;
 using static Aplicacion.Descuentos.ProductoDescuentos;
 
@@ -21,6 +22,13 @@ namespace Aplicacion.Servicios
 
         public async Task<ProductResponseDto> CreateProductAsync(CreateProductDto dto, CancellationToken ct = default)
         {
+            if (string.IsNullOrWhiteSpace(dto.Nombre))
+                throw new DomainExcepciones("El nombre del producto es obligatorio.");
+            if (dto.Precio < 0)
+                throw new DomainExcepciones("El precio no puede ser negativo.");
+            if (dto.InicialStock < 0)
+                throw new DomainExcepciones("El stock inicial no puede ser negativo.");
+
             var producto = new Producto(dto.Nombre, dto.Descripcion, dto.Precio, dto.InicialStock);
             await _repositorio.AddAsync(producto, ct);
             return MapToDto(producto);
