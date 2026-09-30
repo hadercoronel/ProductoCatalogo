@@ -22,16 +22,19 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// 4. Middlewares de Swagger (disponible en Desarrollo y Producción)
-if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
+// Habilitar Swagger siempre en Producción y Desarrollo
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "API Catálogo v1");
+    c.RoutePrefix = "swagger"; // Disponible en /swagger
+});
+
+// Redirigir la raíz (/) directamente a Swagger UI
+app.MapGet("/", () => Results.Redirect("/swagger"));
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
