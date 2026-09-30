@@ -8,5 +8,6 @@ namespace Infraestructura.Persistencia.Repositorios
         Task<(IEnumerable<Producto> Items, int TotalCount)> GetPagedAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default);
         Task AddAsync(Producto producto, CancellationToken cancellationToken = default);
         Task UpdateAsync(Producto producto, CancellationToken cancellationToken = default);
+        Task<bool> DeleteAsync(int id, CancellationToken ct);
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Aplicacion.Descuentos;
 using Domain.Entidades;
-
+using Infraestructura.Persistencia.Repositorios;
 using static Aplicacion.Descuentos.ProductoDescuentos;
 
 namespace Aplicacion.Servicios
@@ -30,6 +30,11 @@ namespace Aplicacion.Servicios
         {
             var product = await _repositorio.GetByIdAsync(id, ct);
             return product == null ? null : MapToDto(product);
+        }
+
+        public async Task<bool> DeleteProductAsync(int id, CancellationToken ct = default)
+        {
+            return await _repositorio.DeleteAsync(id, ct);
         }
 
         public async Task<PagedResultDto<ProductResponseDto>> GetPagedProductsAsync(int pageNumber, int pageSize, CancellationToken ct = default)

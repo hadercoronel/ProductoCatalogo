@@ -40,5 +40,17 @@ namespace Infraestructura.Persistencia.Repositorios
             _context.Productos.Update(producto);
             await _context.SaveChangesAsync(cancellationToken);
         }
+
+        public async Task<bool> DeleteAsync(int id, CancellationToken ct = default)
+        {
+            var producto = await _context.Productos.FindAsync(new object[] { id }, ct);
+            if (producto == null)
+                return false;
+
+            _context.Productos.Remove(producto);
+            await _context.SaveChangesAsync(ct);
+
+            return true;
+        }
     }
 }

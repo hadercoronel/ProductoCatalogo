@@ -13,5 +13,6 @@ namespace Aplicacion.Servicios
         Task<ProductResponseDto?> GetProductByIdAsync(int id, CancellationToken ct = default);
         Task<PagedResultDto<ProductResponseDto>> GetPagedProductsAsync(int pageNumber, int pageSize, CancellationToken ct = default);
         Task<ProductResponseDto> AdjustStockAsync(int id, UpdateStockDto dto, CancellationToken ct = default);
+        Task<bool> DeleteProductAsync(int id, CancellationToken ct = default);
     }
 }
