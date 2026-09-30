@@ -16,9 +16,7 @@ namespace ProductoCatalogo.Controllers
             _productService = productService;
         }
 
-        /// <summary>
         /// Crea un nuevo producto en el catálogo.
-        /// </summary>
         [HttpPost]
         [ProducesResponseType(typeof(ProductResponseDto), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -28,9 +26,8 @@ namespace ProductoCatalogo.Controllers
             return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
         }
 
-        /// <summary>
-        /// Consulta un producto por su ID.
-        /// </summary>
+       
+        /// Consulta un producto por su ID
         [HttpGet("{id:int}")]
         [ProducesResponseType(typeof(ProductResponseDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -42,9 +39,7 @@ namespace ProductoCatalogo.Controllers
             return Ok(result);
         }
 
-        /// <summary>
         /// Consulta el catálogo de productos con paginación.
-        /// </summary>
         [HttpGet]
         [ProducesResponseType(typeof(PagedResultDto<ProductResponseDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetPaged([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10, CancellationToken ct = default)
@@ -56,9 +51,7 @@ namespace ProductoCatalogo.Controllers
             return Ok(result);
         }
 
-        /// <summary>
         /// Incrementa o disminuye el stock de un producto.
-        /// </summary>
         [HttpPatch("{id:int}/stock")]
         [ProducesResponseType(typeof(ProductResponseDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -79,7 +72,7 @@ namespace ProductoCatalogo.Controllers
             if (!deleted)
                 return NotFound(new { message = $"Producto con ID {id} no encontrado." });
 
-            return NoContent(); // 204 No Content: borrado exitoso sin cuerpo de respuesta
+            return NoContent();
         }
     }
 }
