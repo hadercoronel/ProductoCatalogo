@@ -1,0 +1,11 @@
+bin/
+obj/
+out/
+.vs/
+.git/
+.vscode/
+*.user
+*.rsuser
+*.suo
+TestResult*/
+publish/
