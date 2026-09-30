@@ -2,6 +2,11 @@
 
 API REST en .NET 9 para la gestión del catálogo de productos (crear, consultar, paginar, ajustar stock y eliminar), con MySQL (Pomelo EF Core) y documentación Swagger.
 
+## Demo en línea
+
+- Swagger (producción en Railway): https://productocatalogo-production-f033.up.railway.app/swagger/index.html
+- Salud: https://productocatalogo-production-f033.up.railway.app/health
+
 ## 1. Requisitos
 
 - [.NET 9 SDK](https://dotnet.microsoft.com/download) (`dotnet --version` → `9.x`)
